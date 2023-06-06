@@ -87,9 +87,12 @@ function draw() {
     gameOver.visible = false
     restart.visible = false
     //mover o solo
-    ground.velocityX = -4;
+    ground.velocityX = -(4 +3* score/100);
     //pontuação
     score = score + Math.round(frameCount/60);
+    if(score>0 && score%100 === 0){
+       cheakPointSound.play()
+    }
     
     if (ground.x < 0){
       ground.x = ground.width/2;
@@ -98,6 +101,7 @@ function draw() {
     //pular quando a tecla de espaço for pressionada
     if(keyDown("space")&& trex.y >= 100) {
         trex.velocityY = -12;
+        jumpSound.play();
     }
     
     //adicione gravidade
@@ -111,6 +115,7 @@ function draw() {
     
     if(obstaclesGroup.isTouching(trex)){
         gameState = END;
+        dieSound.play()
     }
   }
    else if (gameState === END) {
